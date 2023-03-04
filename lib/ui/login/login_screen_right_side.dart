@@ -114,6 +114,7 @@ class LoginScreenRightSide extends StatelessWidget {
 
       // API call
       // if credentials are not valid, show error message
+      // TODO: Need to uncomment
       if (emailController.text != 'test@test.com' &&
           passwordController.text != 'test') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
