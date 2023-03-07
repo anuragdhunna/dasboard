@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/assets_path.dart';
 import '../../utils/widgetFunctions.dart';
-import '../dashboard/dashboard_screen.dart';
 
 class LoginScreenRightSide extends StatelessWidget {
   LoginScreenRightSide({
@@ -123,10 +122,11 @@ class LoginScreenRightSide extends StatelessWidget {
         ));
       }
       // Navigate to Dashboard
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const DashboardScreen()),
-      );
+      Navigator.pushNamed(context, '/dashboard');
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const DashboardScreen()),
+      // );
     }
   }
 

@@ -7,16 +7,16 @@ class IconWithLabel extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.label,
+    required this.onTap,
   }) : super(key: key);
 
   final IconData icon;
   final String label;
+  final Function() onTap;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () {
-          Navigator.pop(context);
-        },
+        onTap: onTap,
         child: Row(
           children: [
             Icon(icon, color: AppColors.grey),

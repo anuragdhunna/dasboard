@@ -6,7 +6,7 @@ import '../models/post.dart';
 
 class APIService {
   static const String getPostUrl = 'posts';
-  static const String getUserPostUrl = 'users/<userID>/posts';
+  static const String getUserPostUrl = 'users/<userId>/posts';
   static const String getPostCommentsUrl = 'posts/<postId>/comments';
 
   Dio getClient(url) => Dio(BaseOptions(baseUrl: url));
@@ -20,5 +20,11 @@ class APIService {
     final response = await BaseApiService()
         .get(getPostCommentsUrl.replaceAll('<postId>', postId));
     return (response.data as List).map((e) => Comment.fromJson(e)).toList();
+  }
+
+  Future<List<Post>> getUserPosts(String userId) async {
+    final response = await BaseApiService()
+        .get(getUserPostUrl.replaceAll('<userId>', userId));
+    return (response.data as List).map((e) => Post.fromJson(e)).toList();
   }
 }

@@ -1,7 +1,11 @@
+import 'package:dasboard/ui/dashboard/dashboard_screen.dart';
 import 'package:dasboard/ui/login/login_screen.dart';
+import 'package:dasboard/ui/user_post/user_post_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 void main() {
+  setPathUrlStrategy();
   runApp(const MyApp());
 }
 
@@ -18,7 +22,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // TODO: check logged in or not.
-      home: const LoginScreen(),
+      // home: const LoginScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const LoginScreen(),
+        '/dashboard': (context) => const DashboardScreen(),
+        '/user/posts': (context) => const UserPostScreen(userId: ''),
+      },
     );
   }
 }

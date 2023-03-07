@@ -40,6 +40,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.5
   collapsible_sidebar: ^2.0.3+3
+  url_strategy: ^0.2.0
+  easy_sidemenu: ^0.4.1+1
 
 dev_dependencies:
   flutter_test:

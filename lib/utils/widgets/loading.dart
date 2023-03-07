@@ -1,4 +1,3 @@
-import 'package:dasboard/constants/assets_path.dart';
 import 'package:flutter/material.dart';
 
 class Loading extends StatelessWidget {
@@ -6,15 +5,6 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: .8,
-      child: Container(
-        child: Center(
-            child: Image.asset(
-          AssetsPath.appLogo, //TODO: add proper
-          height: 80,
-        )),
-      ),
-    );
+    return const Center(child: LinearProgressIndicator());
   }
 }
