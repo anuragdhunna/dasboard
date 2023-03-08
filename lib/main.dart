@@ -19,15 +19,18 @@ class MyApp extends StatelessWidget {
       title: 'Pathverse Dashboard',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+        backgroundColor: Colors.red,
+        primarySwatch: Colors.orange,
       ),
+
       // TODO: check logged in or not.
       // home: const LoginScreen(),
-      initialRoute: '/',
+      initialRoute: '/user/posts',
       routes: {
         '/': (context) => const LoginScreen(),
         '/dashboard': (context) => const DashboardScreen(),
-        '/user/posts': (context) => const UserPostScreen(userId: ''),
+        '/user/posts': (context) => const UserPostScreen(userId: '1'),
       },
     );
   }

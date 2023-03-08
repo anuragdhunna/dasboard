@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
               width: 1080,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: Colors.black,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(

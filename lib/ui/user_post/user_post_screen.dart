@@ -69,14 +69,41 @@ class _UserPostScreenState extends State<UserPostScreen> {
   }
 
   Widget buildBody(BuildContext context, List<Post> posts) {
-    return Row(
-      children: [
-        buildPostList(context, posts),
-        PostDetailsWidget(
-          comments: comments,
-          post: post,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 5,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Anurag',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white)),
+              Divider(
+                color: AppColors.grey,
+                height: 1,
+              ),
+              addVerticalSpace(10),
+              Expanded(
+                child: Row(
+                  children: [
+                    buildPostList(context, posts),
+                    addHorizontalSpace(2),
+                    DetailsWidget(
+                      comments: comments,
+                      post: post,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ],
+      ),
     );
   }
 
@@ -85,7 +112,7 @@ class _UserPostScreenState extends State<UserPostScreen> {
     List<Post> posts,
   ) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 2,
+      width: MediaQuery.of(context).size.width / 2.3,
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
@@ -113,23 +140,25 @@ class _UserPostScreenState extends State<UserPostScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          addVerticalSpace(5),
           Text(
             post.title!,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
-          addVerticalSpace(3),
+          addVerticalSpace(5),
           Text(
             post.body!,
           ),
-          const Divider(),
+          addVerticalSpace(5),
+          const Divider(height: 1),
         ],
       ),
     );
   }
 }
 
-class PostDetailsWidget extends StatelessWidget {
-  const PostDetailsWidget({
+class DetailsWidget extends StatelessWidget {
+  const DetailsWidget({
     Key? key,
     required this.comments,
     required this.post,
@@ -143,97 +172,115 @@ class PostDetailsWidget extends StatelessWidget {
         ? Center(
             child: Text('Please Select a Post.',
                 style: TextStyle(color: AppColors.black)))
-        : SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
-            child: Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  /// Header
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 18.0,
-                      vertical: 10,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            IconWithLabel(
-                              label: 'Copy Link',
-                              icon: Icons.link,
-                              onTap: () => ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("Copied"),
-                              )),
-                            ),
-                            addHorizontalSpace(10),
-                            IconWithLabel(
-                              label: 'Delete Post',
-                              icon: Icons.delete_sweep_outlined,
-                              onTap: () => Navigator.pop(context),
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Icon(Icons.close, color: AppColors.grey)),
-                      ],
-                    ),
-                  ),
-                  const Divider(height: 1),
-
-                  /// Post Details
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0,
-                      vertical: 10,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          post.title ?? '',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 24),
-                        ),
-                        addVerticalSpace(15),
-                        Text(post.body ?? ''),
-                      ],
-                    ),
-                  ),
-                  const Divider(height: 1),
-
-                  /// Comments
-                  Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      color: AppColors.greyLite,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: comments.length,
-                          physics: const BouncingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics()),
-                          itemBuilder: (context, item) {
-                            return PostComment(
-                              comment: comments[item],
-                            );
-                            // return listTile(position);
-                          },
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+        : Expanded(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
+              child: PostDetailWidget(post: post, comments: comments),
             ),
           );
+  }
+}
+
+class PostDetailWidget extends StatelessWidget {
+  const PostDetailWidget({
+    Key? key,
+    required this.post,
+    required this.comments,
+  }) : super(key: key);
+
+  final Post post;
+  final List<Comment> comments;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// Header
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 18.0,
+              vertical: 10,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    IconWithLabel(
+                      label: 'Copy Link',
+                      icon: Icons.link,
+                      onTap: () => ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(
+                        content: Text("Copied"),
+                      )),
+                    ),
+                    addHorizontalSpace(10),
+                    IconWithLabel(
+                      label: 'Delete Post',
+                      icon: Icons.delete_sweep_outlined,
+                      onTap: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(Icons.close, color: AppColors.grey)),
+              ],
+            ),
+          ),
+          const Divider(height: 1),
+
+          /// Post Details
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 10,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  post.title ?? '',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 24),
+                ),
+                addVerticalSpace(15),
+                Text(post.body ?? ''),
+              ],
+            ),
+          ),
+          const Divider(height: 1),
+
+          /// Comments
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              // color: AppColors.greyLite,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: comments.length,
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  itemBuilder: (context, item) {
+                    return PostComment(
+                      comment: comments[item],
+                    );
+                    // return listTile(position);
+                  },
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

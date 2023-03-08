@@ -49,14 +49,20 @@ class LoginScreenRightSide extends StatelessWidget {
                 label: 'Email',
                 hintText: 'Please enter your email',
                 validationMessage: 'Invalid email address',
-                icon: const Icon(Icons.email),
+                icon: const Icon(
+                  Icons.email,
+                  color: Colors.orange,
+                ),
                 controller: emailController,
               ),
               addVerticalSpace(12),
               CustomTextFormField(
                 label: 'Password',
                 hintText: 'Please enter your password',
-                icon: const Icon(Icons.password),
+                icon: const Icon(
+                  Icons.password,
+                  color: Colors.orange,
+                ),
                 validationMessage: 'Please enter a password',
                 controller: passwordController,
               ),
@@ -65,7 +71,8 @@ class LoginScreenRightSide extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: MaterialButton(
                     onPressed: () => forgotPassword(context),
-                    child: const Text('Forgot Password?')),
+                    child: Text('Forgot Password?',
+                        style: TextStyle(color: AppColors.orange))),
               ),
               addVerticalSpace(12),
               MaterialButton(
@@ -73,7 +80,7 @@ class LoginScreenRightSide extends StatelessWidget {
                 elevation: 12,
                 onPressed: () => submit(context),
                 minWidth: double.infinity,
-                color: AppColors.blueAccent,
+                color: AppColors.orange,
                 textColor: AppColors.white,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
@@ -114,13 +121,13 @@ class LoginScreenRightSide extends StatelessWidget {
       // API call
       // if credentials are not valid, show error message
       // TODO: Need to uncomment
-      if (emailController.text != 'test@test.com' &&
-          passwordController.text != 'test') {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Please enter va valid email address and password.',
-              style: TextStyle(color: Colors.white)),
-        ));
-      }
+      // if (emailController.text != 'test@test.com' &&
+      //     passwordController.text != 'test') {
+      //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      //     content: Text('Please enter va valid email address and password.',
+      //         style: TextStyle(color: Colors.white)),
+      //   ));
+      // }
       // Navigate to Dashboard
       Navigator.pushNamed(context, '/dashboard');
       // Navigator.push(
@@ -130,8 +137,13 @@ class LoginScreenRightSide extends StatelessWidget {
     }
   }
 
-  SizedBox buildSocialIcon(String iconPath) {
-    return SizedBox(height: 30, width: 30, child: Image.asset(iconPath));
+  Widget buildSocialIcon(String iconPath) {
+    return SizedBox(
+        height: 40,
+        width: 40,
+        child: Image.asset(
+          iconPath,
+        ));
   }
 
   forgotPassword(BuildContext context) {}

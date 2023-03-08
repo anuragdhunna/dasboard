@@ -17,12 +17,14 @@ class PostComment extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: SizedBox(
-                height: 50,
-                width: 50,
-                child: Image.asset(AssetsPath.femaleUser)),
+          CircleAvatar(
+            radius: 35,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(45),
+              child: Image.asset(
+                AssetsPath.femaleUser,
+              ),
+            ),
           ),
           addHorizontalSpace(5),
           Column(
@@ -31,22 +33,24 @@ class PostComment extends StatelessWidget {
               Row(
                 children: [
                   Text(comment.name ?? '',
-                      style: TextStyle(
-                        color: AppColors.grey,
-                        fontWeight: FontWeight.w500,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
                         fontSize: 14,
                       )),
                   addHorizontalSpace(5),
                   Text(
                     'Jan 12, 2023 at 5:23 PM',
-                    style: TextStyle(color: AppColors.grey, fontSize: 12),
+                    style: TextStyle(
+                      color: AppColors.grey,
+                      fontSize: 12,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
               addVerticalSpace(3),
               Text(
                 comment.body ?? '',
-                // maxLines: 3,
               ),
             ],
           ),

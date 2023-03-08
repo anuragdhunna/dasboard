@@ -19,7 +19,7 @@ class IconWithLabel extends StatelessWidget {
         onTap: onTap,
         child: Row(
           children: [
-            Icon(icon, color: AppColors.grey),
+            Icon(icon, color: Colors.orange),
             addHorizontalSpace(3),
             Text(
               label,

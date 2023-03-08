@@ -2,10 +2,7 @@ import 'package:dasboard/constants/app_colors.dart';
 import 'package:dasboard/models/comment.dart';
 import 'package:dasboard/models/post.dart';
 import 'package:dasboard/services/api_services.dart';
-import 'package:dasboard/ui/dashboard/icon_with_label.dart';
-import 'package:dasboard/ui/dashboard/post_comment.dart';
 import 'package:dasboard/ui/user_post/user_post_screen.dart';
-import 'package:dasboard/utils/widgetFunctions.dart';
 import 'package:flutter/material.dart';
 
 class PostTable extends StatelessWidget {
@@ -28,7 +25,7 @@ class PostTable extends StatelessWidget {
           // headingRowColor: MaterialStateColor.resolveWith(
           //     (states) => AppColors.greyLite),
           header: const Text('Posts'),
-          columnSpacing: 50,
+          columnSpacing: 30,
           columns: const [
             DataColumn(
               label: Text(
@@ -83,8 +80,8 @@ class MyDataPage extends DataTableSource {
             Tooltip(
               message: posts[index].body,
               child: Icon(
-                Icons.info_outline,
-                color: AppColors.grey,
+                Icons.info_outline_rounded,
+                color: AppColors.orange,
               ),
             ),
           ],
@@ -107,7 +104,7 @@ class MyDataPage extends DataTableSource {
       ),
       DataCell(
         InkWell(
-            child: const Icon(Icons.comment),
+            child: const Icon(Icons.comment, color: Colors.orange),
             onTap: () async {
               // Call API to fetch comments
               List<Comment> comments =
@@ -122,99 +119,8 @@ class MyDataPage extends DataTableSource {
                     child: SizedBox(
                       height: 600,
                       width: 800,
-                      child: Card(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            /// Header
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 18.0,
-                                vertical: 10,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      IconWithLabel(
-                                        label: 'Copy Link',
-                                        icon: Icons.link,
-                                        onTap: () =>
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                          content: Text("Copied"),
-                                        )),
-                                      ),
-                                      addHorizontalSpace(10),
-                                      IconWithLabel(
-                                        label: 'Delete Post',
-                                        icon: Icons.delete_sweep_outlined,
-                                        onTap: () => Navigator.pop(context),
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  InkWell(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Icon(Icons.close,
-                                          color: AppColors.grey)),
-                                ],
-                              ),
-                            ),
-                            const Divider(height: 1),
-
-                            /// Post Details
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0,
-                                vertical: 10,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    posts[1].title ?? '',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24),
-                                  ),
-                                  addVerticalSpace(15),
-                                  Text(posts[1].body ?? ''),
-                                ],
-                              ),
-                            ),
-                            const Divider(height: 1),
-
-                            /// Comments
-                            Expanded(
-                              child: Container(
-                                width: double.infinity,
-                                color: AppColors.greyLite,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    itemCount: comments.length,
-                                    physics: const BouncingScrollPhysics(
-                                        parent:
-                                            AlwaysScrollableScrollPhysics()),
-                                    itemBuilder: (context, item) {
-                                      return PostComment(
-                                        comment: comments[item],
-                                      );
-                                      // return listTile(position);
-                                    },
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                      child: PostDetailWidget(
+                          post: posts[index], comments: comments),
                     ),
                   );
                 },

@@ -1,3 +1,4 @@
+import 'package:dasboard/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -20,10 +21,12 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
-        prefixIcon: icon,
-        label: Text(label),
-        hintText: hintText,
-      ),
+          prefixIcon: icon,
+          label: Text(label),
+          hintText: hintText,
+          labelStyle: TextStyle(
+            color: AppColors.orange,
+          )),
       validator: (value) {
         if (value!.isEmpty) {
           return validationMessage;
