@@ -1,8 +1,8 @@
 # dashboard
 
-##Flutter Dashboard
+Flutter Dashboard
 
-###Login credentials:
+Login credentials:
 email: test@test.com
 password: test
 
