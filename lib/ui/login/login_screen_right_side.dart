@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/assets_path.dart';
 import '../../utils/widgetFunctions.dart';
+import '../dashboard/dashboard_screen.dart';
 
 class LoginScreenRightSide extends StatelessWidget {
   LoginScreenRightSide({
@@ -33,8 +34,10 @@ class LoginScreenRightSide extends StatelessWidget {
                   child: Container(
                     height: 100,
                     width: 300,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
+                    decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.circular(30),
+                        image: const DecorationImage(
                             image: AssetImage(AssetsPath.appLogo))),
                   ),
                 )
@@ -49,20 +52,22 @@ class LoginScreenRightSide extends StatelessWidget {
                 label: 'Email',
                 hintText: 'Please enter your email',
                 validationMessage: 'Invalid email address',
-                icon: const Icon(
+                icon: Icon(
                   Icons.email,
-                  color: Colors.orange,
+                  color: AppColors.orange,
                 ),
+                message: 'test@test.com',
                 controller: emailController,
               ),
               addVerticalSpace(12),
               CustomTextFormField(
                 label: 'Password',
                 hintText: 'Please enter your password',
-                icon: const Icon(
+                icon: Icon(
                   Icons.password,
-                  color: Colors.orange,
+                  color: AppColors.orange,
                 ),
+                message: 'test',
                 validationMessage: 'Please enter a password',
                 controller: passwordController,
               ),
@@ -78,13 +83,25 @@ class LoginScreenRightSide extends StatelessWidget {
               MaterialButton(
                 height: 50,
                 elevation: 12,
-                onPressed: () => submit(context),
+                onPressed: () => submit(context, 1),
                 minWidth: double.infinity,
                 color: AppColors.orange,
                 textColor: AppColors.white,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
-                child: const Text('Login'),
+                child: const Text('Login Dashboard 1'),
+              ),
+              addVerticalSpace(15),
+              MaterialButton(
+                height: 50,
+                elevation: 12,
+                onPressed: () => submit(context, 2),
+                minWidth: double.infinity,
+                color: AppColors.orange,
+                textColor: AppColors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                child: const Text('Login Dashboard 2'),
               ),
               addVerticalSpace(12),
               const Center(child: Text('OR')),
@@ -106,34 +123,37 @@ class LoginScreenRightSide extends StatelessWidget {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  void submit(BuildContext context) {
+
+  void submit(BuildContext context, int dashboardNo) {
     if (_formKey.currentState!.validate()) {
       HelperMethods().validateEmail(emailController.text);
 
       if (!EmailValidator.validate(emailController.text)) {
-        log("=======vv========");
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('The E-mail Address must be a valid email address.',
-              style: TextStyle(color: Colors.white)),
+              style: TextStyle(color: Colors.black)),
         ));
+        return;
       }
 
       // API call
       // if credentials are not valid, show error message
-      // TODO: Need to uncomment
-      // if (emailController.text != 'test@test.com' &&
-      //     passwordController.text != 'test') {
-      //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      //     content: Text('Please enter va valid email address and password.',
-      //         style: TextStyle(color: Colors.white)),
-      //   ));
-      // }
+      if (emailController.text != 'test@test.com' &&
+          passwordController.text != 'test') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Invalid Credentials!',
+              style: TextStyle(color: Colors.black)),
+        ));
+        return;
+      }
       // Navigate to Dashboard
-      Navigator.pushNamed(context, '/dashboard');
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const DashboardScreen()),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DashboardScreen(
+                  dashboardNo: dashboardNo,
+                )),
+      );
     }
   }
 

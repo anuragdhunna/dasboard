@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:dasboard/constants/app_colors.dart';
 import 'package:dasboard/models/comment.dart';
 import 'package:dasboard/models/post.dart';
 import 'package:dasboard/services/api_services.dart';
 import 'package:dasboard/ui/user_post/user_post_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../utils/widgets/post_widgets/post_detail_widget.dart';
 
 class PostTable extends StatelessWidget {
   const PostTable({
@@ -24,34 +28,40 @@ class PostTable extends StatelessWidget {
           showCheckboxColumn: false,
           // headingRowColor: MaterialStateColor.resolveWith(
           //     (states) => AppColors.greyLite),
-          header: const Text('Posts'),
+          header: const Text(
+            'Recent Posts',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFeatures: [FontFeature.proportionalFigures()]),
+          ),
           columnSpacing: 30,
-          columns: const [
+          columns: [
             DataColumn(
-              label: Text(
-                'Title',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              label: buildTableHeaderText(label: 'Title'),
             ),
             DataColumn(
-              label: Text('Description',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              label: buildTableHeaderText(label: 'Description'),
             ),
             DataColumn(
-              label: Text('User ID',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              label: buildTableHeaderText(label: 'User ID'),
             ),
             DataColumn(
-                label: Text(
-              'Comments',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            )),
+              label: buildTableHeaderText(label: 'Comments'),
+            ),
           ],
 
           source: data,
           rowsPerPage: 20,
         ),
       ),
+    );
+  }
+
+  Text buildTableHeaderText({required String label}) {
+    return Text(
+      label,
+      style: TextStyle(
+          fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.grey),
     );
   }
 }
@@ -104,7 +114,7 @@ class MyDataPage extends DataTableSource {
       ),
       DataCell(
         InkWell(
-            child: const Icon(Icons.comment, color: Colors.orange),
+            child: Icon(Icons.comment, color: AppColors.orange),
             onTap: () async {
               // Call API to fetch comments
               List<Comment> comments =

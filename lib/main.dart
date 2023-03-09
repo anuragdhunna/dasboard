@@ -4,6 +4,8 @@ import 'package:dasboard/ui/user_post/user_post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
 
+import 'constants/app_colors.dart';
+
 void main() {
   setPathUrlStrategy();
   runApp(const MyApp());
@@ -20,16 +22,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
-        backgroundColor: Colors.red,
-        primarySwatch: Colors.orange,
+        backgroundColor: AppColors.orangeAccent,
+        primarySwatch: AppColors.orange,
       ),
 
-      // TODO: check logged in or not.
+      // TODO: check logged in or not using shared preferences
       // home: const LoginScreen(),
-      initialRoute: '/user/posts',
+      initialRoute: '/',
       routes: {
         '/': (context) => const LoginScreen(),
-        '/dashboard': (context) => const DashboardScreen(),
+        '/dashboard': (context) => const DashboardScreen(dashboardNo: 1),
         '/user/posts': (context) => const UserPostScreen(userId: '1'),
       },
     );

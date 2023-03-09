@@ -9,9 +9,11 @@ class CustomTextFormField extends StatelessWidget {
     required this.icon,
     required this.validationMessage,
     required this.controller,
+    required this.message,
   }) : super(key: key);
 
   final String label;
+  final String message;
   final String hintText;
   final Icon icon;
   final String? validationMessage;
@@ -24,6 +26,13 @@ class CustomTextFormField extends StatelessWidget {
           prefixIcon: icon,
           label: Text(label),
           hintText: hintText,
+          suffixIcon: Tooltip(
+            message: message,
+            child: Icon(
+              Icons.info_outline_rounded,
+              color: AppColors.orange,
+            ),
+          ),
           labelStyle: TextStyle(
             color: AppColors.orange,
           )),
